@@ -1,0 +1,99 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.hypothesis/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+__pypackages__/
+
+# Local Python version and environment configuration
+.python-version
+.env
+.env.*
+!.env.example
+!.env.template
+.direnv/
+
+# Credentials and private keys
+secrets/
+credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+
+# Other editor files
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+
+# Test coverage and reports
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+junit.xml
+test-results/
+
+# Jupyter temporary files
+.ipynb_checkpoints/
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+
+# Generated SQLite databases and transaction files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Local experiment scratch work
+scratch/
+.local/
+
+# Operating system files
+.DS_Store
+.AppleDouble
+._*
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
