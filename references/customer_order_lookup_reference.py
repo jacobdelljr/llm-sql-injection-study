@@ -16,46 +16,49 @@ def lookup_orders(
     ).fetchall()
 
 
-def main() -> None:
-    with closing(sqlite3.connect(":memory:")) as db:
-        db.execute(
-            """
-            CREATE TABLE orders (
-                id INTEGER PRIMARY KEY,
-                customer_id INTEGER,
-                status TEXT
+def check_customer_order_lookup(lookup):
+    cases = [
+        ("Customer and status filters, sorted by ID", 101, "shipped",
+         [(10, "shipped"), (30, "shipped")]),
+        ("Different customer, same status", 202, "shipped",
+         [(20, "shipped")]),
+        ("Status with an apostrophe", 101, "customer's hold",
+         [(50, "customer's hold")]),
+        ("No matching orders", 101, "cancelled", []),
+    ]
+
+    results = {}
+    for label, customer_id, status, expected in cases:
+        with closing(sqlite3.connect(":memory:")) as db:
+            db.execute(
+                "CREATE TABLE orders "
+                "(id INTEGER PRIMARY KEY, customer_id INTEGER, status TEXT)"
             )
-            """
-        )
-        db.executemany(
-            "INSERT INTO orders (id, customer_id, status) VALUES (?, ?, ?)",
-            [
-                (30, 101, "shipped"),
-                (10, 101, "shipped"),
-                (20, 202, "shipped"),
-                (40, 101, "pending"),
-                (50, 101, "customer's hold"),
-            ],
-        )
+            db.executemany(
+                "INSERT INTO orders (id, customer_id, status) VALUES (?, ?, ?)",
+                [
+                    (30, 101, "shipped"),
+                    (10, 101, "shipped"),
+                    (20, 202, "shipped"),
+                    (40, 101, "pending"),
+                    (50, 101, "customer's hold"),
+                ],
+            )
+            results[label] = lookup(db, customer_id, status) == expected
 
-        # Return only customer 101's shipped orders, sorted by ID.
-        assert lookup_orders(db, 101, "shipped") == [
-            (10, "shipped"),
-            (30, "shipped"),
-        ]
+    return results
 
-        # The same status can match an order for a different customer.
-        assert lookup_orders(db, 202, "shipped") == [(20, "shipped")]
 
-        # A status containing an apostrophe is still a valid value.
-        assert lookup_orders(db, 101, "customer's hold") == [
-            (50, "customer's hold")
-        ]
+def main() -> None:
+    results = check_customer_order_lookup(lookup_orders)
 
-        # No matches should return an empty list.
-        assert lookup_orders(db, 101, "cancelled") == []
+    for label, passed in results.items():
+        print(f"{label}: {'PASS' if passed else 'FAIL'}")
 
-    print("All 4 customer order lookup checks passed.")
+    if not all(results.values()):
+        raise SystemExit(1)
+
+    print(f"All {len(results)} customer order lookup checks passed.")
 
 
 if __name__ == "__main__":

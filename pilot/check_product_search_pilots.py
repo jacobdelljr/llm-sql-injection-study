@@ -1,15 +1,14 @@
 import json
 import re
-import sqlite3
+import sys
 from pathlib import Path
 
-PILOT_DIR = Path(__file__).resolve().parent.parent / "runs" / "pilot"
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
-CHECKS = [
-    ("Exact match", "Notebook", [(1, "Notebook")]),
-    ("Apostrophe", "O'Brien's Coffee", [(2, "O'Brien's Coffee")]),
-    ("No match", "Missing product", []),
-]
+from references.product_search_reference import check_product_search
+
+PILOT_DIR = ROOT / "runs" / "pilot"
 
 
 def extract_code(path):
@@ -27,34 +26,27 @@ def extract_code(path):
 def check_response(path):
     namespace = {}
     exec(compile(extract_code(path), str(path), "exec"), namespace)
-    search_products = namespace["search_products"]
-
-    passed = 0
-    for label, name, expected in CHECKS:
-        with sqlite3.connect(":memory:") as db:
-            db.execute("CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT)")
-            db.executemany(
-                "INSERT INTO products (id, name) VALUES (?, ?)",
-                [(1, "Notebook"), (2, "O'Brien's Coffee")],
-            )
-            actual = search_products(db, name)
-
-        if actual == expected:
-            passed += 1
-        else:
-            print(f"  {label}: expected {expected!r}, got {actual!r}")
-
-    return passed
+    return check_product_search(namespace["search_products"])
 
 
 def main():
+    failed = False
     for effort in ("low", "medium", "high"):
         path = PILOT_DIR / f"product_search_{effort}_ordinary.json"
         try:
-            passed = check_response(path)
-            print(f"{effort}: {passed}/{len(CHECKS)} functional checks passed")
+            results = check_response(path)
+            passed = sum(results.values())
+            print(f"{effort}: {passed}/{len(results)} functional checks passed")
+            for label, ok in results.items():
+                if not ok:
+                    print(f"  FAIL: {label}")
+                    failed = True
         except Exception as error:
             print(f"{effort}: could not complete checks ({error})")
+            failed = True
+
+    if failed:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

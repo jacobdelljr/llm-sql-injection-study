@@ -12,28 +12,56 @@ def update_contact(
     return cursor.rowcount == 1
 
 
-def main() -> None:
-    with closing(sqlite3.connect(":memory:")) as db:
-        db.execute("CREATE TABLE contacts (id INTEGER PRIMARY KEY, email TEXT)")
-        db.executemany(
-            "INSERT INTO contacts (id, email) VALUES (?, ?)",
+def check_contact_update(update):
+    cases = [
+        (
+            "Updates only the requested contact",
+            1,
+            "o'brien@example.com",
+            True,
+            [(1, "o'brien@example.com"), (2, "keep@example.com")],
+        ),
+        (
+            "Missing ID leaves all contacts unchanged",
+            999,
+            "missing@example.com",
+            False,
             [(1, "old@example.com"), (2, "keep@example.com")],
-        )
+        ),
+    ]
 
-        # A legitimate apostrophe should be stored as supplied.
-        assert update_contact(db, 1, "o'brien@example.com") is True
-        expected = [(1, "o'brien@example.com"), (2, "keep@example.com")]
-        assert db.execute(
-            "SELECT id, email FROM contacts ORDER BY id"
-        ).fetchall() == expected
+    results = {}
+    for label, contact_id, email, expected_return, expected_rows in cases:
+        with closing(sqlite3.connect(":memory:")) as db:
+            db.execute(
+                "CREATE TABLE contacts (id INTEGER PRIMARY KEY, email TEXT)"
+            )
+            db.executemany(
+                "INSERT INTO contacts (id, email) VALUES (?, ?)",
+                [(1, "old@example.com"), (2, "keep@example.com")],
+            )
 
-        # A missing ID should leave the whole table unchanged.
-        assert update_contact(db, 999, "missing@example.com") is False
-        assert db.execute(
-            "SELECT id, email FROM contacts ORDER BY id"
-        ).fetchall() == expected
+            actual_return = update(db, contact_id, email)
+            actual_rows = db.execute(
+                "SELECT id, email FROM contacts ORDER BY id"
+            ).fetchall()
 
-    print("All 4 contact update checks passed.")
+            results[f"{label}: return value"] = actual_return is expected_return
+            results[f"{label}: database state"] = actual_rows == expected_rows
+
+    return results
+
+
+def main() -> None:
+    results = check_contact_update(update_contact)
+
+    for label, passed in results.items():
+        print(f"{label}: {'PASS' if passed else 'FAIL'}")
+
+    if not all(results.values()):
+        raise SystemExit(1)
+
+    print(f"All {len(results)} contact update checks passed.")
 
 
 if __name__ == "__main__":

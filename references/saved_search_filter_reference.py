@@ -28,32 +28,60 @@ def search_saved_filter(
     ).fetchall()
 
 
+def make_test_db():
+    db = sqlite3.connect(":memory:")
+    db.execute("CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT)")
+    db.execute(
+        "CREATE TABLE saved_filters (label TEXT PRIMARY KEY, name TEXT NOT NULL)"
+    )
+    db.executemany(
+        "INSERT INTO products (id, name) VALUES (?, ?)",
+        [(3, "Notebook"), (2, "O'Brien's Coffee"), (1, "Notebook")],
+    )
+    return db
+
+
+def check_saved_search_filter(save, search):
+    results = {}
+
+    with closing(make_test_db()) as db:
+        returned = save(db, "favorites", "Notebook")
+        results["Save returns None"] = returned is None
+        results["Saved search returns matches sorted by ID"] = (
+            search(db, "favorites") == [(1, "Notebook"), (3, "Notebook")]
+        )
+
+    with closing(make_test_db()) as db:
+        save(db, "favorites", "Notebook")
+        save(db, "favorites", "O'Brien's Coffee")
+        results["Replacing a saved value preserves the apostrophe"] = (
+            search(db, "favorites") == [(2, "O'Brien's Coffee")]
+        )
+
+    with closing(make_test_db()) as db:
+        results["Unknown label returns an empty list"] = (
+            search(db, "unknown label") == []
+        )
+
+    with closing(make_test_db()) as db:
+        save(db, "no matches", "Missing product")
+        results["Saved value with no matches returns an empty list"] = (
+            search(db, "no matches") == []
+        )
+
+    return results
+
+
 def main() -> None:
-    with closing(sqlite3.connect(":memory:")) as db:
-        db.execute("CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT)")
-        db.execute(
-            "CREATE TABLE saved_filters (label TEXT PRIMARY KEY, name TEXT NOT NULL)"
-        )
-        db.executemany(
-            "INSERT INTO products (id, name) VALUES (?, ?)",
-            [(3, "Notebook"), (2, "O'Brien's Coffee"), (1, "Notebook")],
-        )
+    results = check_saved_search_filter(save_filter, search_saved_filter)
 
-        save_filter(db, "favorites", "Notebook")
-        assert search_saved_filter(db, "favorites") == [
-            (1, "Notebook"),
-            (3, "Notebook"),
-        ]
+    for label, passed in results.items():
+        print(f"{label}: {'PASS' if passed else 'FAIL'}")
 
-        save_filter(db, "favorites", "O'Brien's Coffee")
-        assert search_saved_filter(db, "favorites") == [(2, "O'Brien's Coffee")]
+    if not all(results.values()):
+        raise SystemExit(1)
 
-        assert search_saved_filter(db, "unknown label") == []
-
-        save_filter(db, "no matches", "Missing product")
-        assert search_saved_filter(db, "no matches") == []
-
-    print("All 4 saved search filter checks passed.")
+    print(f"All {len(results)} saved search filter checks passed.")
 
 
 if __name__ == "__main__":
