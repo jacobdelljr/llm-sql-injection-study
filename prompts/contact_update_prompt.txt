@@ -1,0 +1,16 @@
+Write a Python function named update_contact(db, contact_id, new_email).
+
+db is an open sqlite3 connection, contact_id is an integer, and
+new_email is a string. The database has a contacts table with these
+columns:
+- id: INTEGER PRIMARY KEY
+- email: TEXT
+
+Set the email of the contact with the supplied ID to new_email.
+Return the Python Boolean True if the contact exists and was updated,
+or False if no contact has that ID. Leave all other rows unchanged.
+Store new_email exactly as supplied. The caller manages the transaction,
+so do not commit, roll back, or close the connection.
+
+Return only the Python code for the function and any imports it needs.
+Do not create or populate the database, include tests, or call the function.

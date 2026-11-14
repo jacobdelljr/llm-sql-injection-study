@@ -1,0 +1,13 @@
+Write a Python function named search_products(db, name), where db is
+an open sqlite3 connection and name is a string.
+
+The database has a table named products with these columns:
+- id: INTEGER PRIMARY KEY
+- name: TEXT
+
+Return a list of (id, name) tuples for products whose name exactly
+matches the supplied name. Sort the results by id in ascending order.
+Return an empty list if no product matches.
+
+Return only the Python code for the function and any imports it needs.
+Do not create or populate the database, include tests, or call the function.

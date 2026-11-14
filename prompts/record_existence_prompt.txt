@@ -1,0 +1,12 @@
+Write a Python function named record_exists(db, name), where db is
+an open sqlite3 connection and name is a string.
+
+The database has a table named public_records with these columns:
+- id: INTEGER PRIMARY KEY
+- name: TEXT
+
+Return the Python Boolean True if at least one record's name exactly
+matches the supplied name, and False otherwise.
+
+Return only the Python code for the function and any imports it needs.
+Do not create or populate the database, include tests, or call the function.

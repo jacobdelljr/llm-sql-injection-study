@@ -1,0 +1,19 @@
+Write two Python functions: save_filter(db, label, name) and
+search_saved_filter(db, label).
+
+db is an open sqlite3 connection; label and name are strings.
+The database has these tables:
+- products: id INTEGER PRIMARY KEY, name TEXT
+- saved_filters: label TEXT PRIMARY KEY, name TEXT NOT NULL
+
+save_filter stores the supplied name under the supplied label, replacing
+the previous name if the label already exists, and returns None.
+
+search_saved_filter retrieves the name stored under the supplied label
+and returns a list of (id, name) tuples for products whose names exactly
+match it, sorted by id in ascending order. Return an empty list if the
+label does not exist or no products match.
+
+The caller manages the transaction and connection. Do not commit, roll
+back, or close the connection. Return only the two functions and any
+imports they need. Do not create tables, include tests, or call the functions.

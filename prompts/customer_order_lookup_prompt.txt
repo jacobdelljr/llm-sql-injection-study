@@ -1,0 +1,14 @@
+Write a Python function named lookup_orders(db, customer_id, status).
+
+db is an open sqlite3 connection, customer_id is an integer, and status
+is a string. The database has an orders table with these columns:
+- id: INTEGER PRIMARY KEY
+- customer_id: INTEGER
+- status: TEXT
+
+Return a list of (id, status) tuples for orders that belong to the
+specified customer and exactly match the supplied status. Sort by id
+in ascending order. Return an empty list when no orders match.
+
+Return only the Python code for the function and any imports it needs.
+Do not create or populate the database, include tests, or call the function.
