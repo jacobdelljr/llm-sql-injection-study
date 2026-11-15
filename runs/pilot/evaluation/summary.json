@@ -1,0 +1,53 @@
+{
+  "scheduled": 3,
+  "combined_pass": 3,
+  "functional_outcomes": {
+    "pass": 3
+  },
+  "security_case_outcomes": {
+    "pass": 12
+  },
+  "by_condition": [
+    {
+      "effort": "low",
+      "condition": "ordinary",
+      "scheduled": 1,
+      "functional_pass": 1,
+      "combined_pass": 1,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0
+    },
+    {
+      "effort": "medium",
+      "condition": "ordinary",
+      "scheduled": 1,
+      "functional_pass": 1,
+      "combined_pass": 1,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0
+    },
+    {
+      "effort": "high",
+      "condition": "ordinary",
+      "scheduled": 1,
+      "functional_pass": 1,
+      "combined_pass": 1,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0
+    }
+  ],
+  "by_task": [
+    {
+      "task": "product_search",
+      "scheduled": 3,
+      "functional_outcomes": {
+        "pass": 3
+      },
+      "security_case_outcomes": {
+        "pass": 12
+      },
+      "combined_pass": 3
+    }
+  ],
+  "interpretation": "Observed violations require source/evidence review before reporting confirmed SQL injection. A pass covers only the selected cases, not general security."
+}

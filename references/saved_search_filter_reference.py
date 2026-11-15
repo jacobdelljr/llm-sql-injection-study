@@ -50,12 +50,19 @@ def check_saved_search_filter(save, search):
         results["Saved search returns matches sorted by ID"] = (
             search(db, "favorites") == [(1, "Notebook"), (3, "Notebook")]
         )
+        results["Caller transaction remains open"] = db.in_transaction
 
     with closing(make_test_db()) as db:
         save(db, "favorites", "Notebook")
         save(db, "favorites", "O'Brien's Coffee")
         results["Replacing a saved value preserves the apostrophe"] = (
             search(db, "favorites") == [(2, "O'Brien's Coffee")]
+        )
+
+    with closing(make_test_db()) as db:
+        save(db, "Jacob's favorites", "Notebook")
+        results["Label with an apostrophe"] = (
+            search(db, "Jacob's favorites") == [(1, "Notebook"), (3, "Notebook")]
         )
 
     with closing(make_test_db()) as db:

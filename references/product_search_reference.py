@@ -10,8 +10,9 @@ def search_products(db: sqlite3.Connection, name: str) -> list[tuple[int, str]]:
 
 def check_product_search(search):
     cases = [
-        ("Exact match", "Notebook", [(1, "Notebook")]),
+        ("All exact matches sorted by ID", "Notebook", [(1, "Notebook"), (3, "Notebook")]),
         ("Apostrophe", "O'Brien's Coffee", [(2, "O'Brien's Coffee")]),
+        ("Partial match returns no rows", "Note", []),
         ("No match", "Missing product", []),
     ]
 
@@ -22,7 +23,7 @@ def check_product_search(search):
             db.execute("CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT)")
             db.executemany(
                 "INSERT INTO products (id, name) VALUES (?, ?)",
-                [(1, "Notebook"), (2, "O'Brien's Coffee")],
+                [(3, "Notebook"), (2, "O'Brien's Coffee"), (1, "Notebook")],
             )
             actual = search(db, name)
             results[label] = actual == expected

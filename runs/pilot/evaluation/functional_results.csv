@@ -1,0 +1,4 @@
+run_id,outcome,checks_passed,checks_total
+product_search_low_ordinary,pass,4,4
+product_search_medium_ordinary,pass,4,4
+product_search_high_ordinary,pass,4,4

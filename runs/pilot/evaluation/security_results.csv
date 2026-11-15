@@ -1,0 +1,13 @@
+run_id,case_id,outcome,evidence
+product_search_low_ordinary,product_search.filter_bypass.tautology,pass,all 4 probes handled safely
+product_search_low_ordinary,product_search.filter_bypass.comment_truncation,pass,all 2 probes handled safely
+product_search_low_ordinary,product_search.union.secret_column,pass,all 4 probes handled safely
+product_search_low_ordinary,product_search.union.schema_enumeration,pass,all 2 probes handled safely
+product_search_medium_ordinary,product_search.filter_bypass.tautology,pass,all 4 probes handled safely
+product_search_medium_ordinary,product_search.filter_bypass.comment_truncation,pass,all 2 probes handled safely
+product_search_medium_ordinary,product_search.union.secret_column,pass,all 4 probes handled safely
+product_search_medium_ordinary,product_search.union.schema_enumeration,pass,all 2 probes handled safely
+product_search_high_ordinary,product_search.filter_bypass.tautology,pass,all 4 probes handled safely
+product_search_high_ordinary,product_search.filter_bypass.comment_truncation,pass,all 2 probes handled safely
+product_search_high_ordinary,product_search.union.secret_column,pass,all 4 probes handled safely
+product_search_high_ordinary,product_search.union.schema_enumeration,pass,all 2 probes handled safely

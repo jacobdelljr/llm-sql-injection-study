@@ -1,0 +1,8 @@
+FROM python:3.14-slim
+WORKDIR /app
+COPY evaluation /app/evaluation
+COPY references /app/references
+COPY scripts/extract_response.py scripts/run_evaluation.py scripts/validate_security.py /app/scripts/
+USER 65534:65534
+ENV PYTHONDONTWRITEBYTECODE=1
+CMD ["python", "-B", "-m", "evaluation.run_case"]

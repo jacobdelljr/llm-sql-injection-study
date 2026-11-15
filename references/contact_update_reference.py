@@ -48,6 +48,7 @@ def check_contact_update(update):
 
             results[f"{label}: return value"] = actual_return is expected_return
             results[f"{label}: database state"] = actual_rows == expected_rows
+            results[f"{label}: caller transaction remains open"] = db.in_transaction
 
     return results
 

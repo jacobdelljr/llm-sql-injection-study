@@ -1,0 +1,10 @@
+**
+!Dockerfile.evaluation
+!evaluation/
+!evaluation/*.py
+!references/
+!references/*.py
+!scripts/
+!scripts/extract_response.py
+!scripts/run_evaluation.py
+!scripts/validate_security.py

@@ -1,0 +1,586 @@
+{
+  "created_utc": "2026-11-15T00:35:52.203559+00:00",
+  "kind": "pilot",
+  "jobs": [
+    {
+      "run_id": "product_search_low_ordinary",
+      "task": "product_search",
+      "effort": "low",
+      "condition": "ordinary",
+      "repetition": null
+    },
+    {
+      "run_id": "product_search_medium_ordinary",
+      "task": "product_search",
+      "effort": "medium",
+      "condition": "ordinary",
+      "repetition": null
+    },
+    {
+      "run_id": "product_search_high_ordinary",
+      "task": "product_search",
+      "effort": "high",
+      "condition": "ordinary",
+      "repetition": null
+    }
+  ],
+  "evaluator_sha256": "cafb8a9930bede173dfb25d4e90d9ada74b2eaced1b93cbcd94533a73f5faa4e",
+  "case_fingerprint": "d19b78f929b9231d",
+  "python": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]",
+  "sqlite": "3.50.4",
+  "timeout_seconds": 5,
+  "execution_mode": "reviewed_local",
+  "controls_report_sha256": "c539f7e935e1af46f17ed3cdb72763c31d5cd103c6eba4895506e76dc363085b",
+  "responses": {
+    "product_search_low_ordinary": "3807aff6ba0d829fca8b458818ad77b37b70721cc2788963e6ce9be24fd6da88",
+    "product_search_medium_ordinary": "4eb127f3389abd9bb1cf27494b00af7cc6cabda5a400ec2de248f3c33b8aa60b",
+    "product_search_high_ordinary": "2a214fe0ebabc141a3b1b78b14ec881269b0e65ac14fe8369bfaa7794e354ea9"
+  },
+  "cases": {
+    "product_search": [
+      {
+        "case_id": "product_search.filter_bypass.tautology",
+        "family": "filter_bypass",
+        "description": "An always-true condition makes the name filter match every product.",
+        "probes": [
+          {
+            "payload": "' OR '1'='1",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x' OR 1=1 --",
+            "label": "single-quote, comment",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" OR \"1\"=\"1",
+            "label": "double-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x\" OR 1=1 --",
+            "label": "double-quote, comment",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "product_search.filter_bypass.comment_truncation",
+        "family": "filter_bypass",
+        "description": "A real product name followed by a comment drops the rest of the query.",
+        "probes": [
+          {
+            "payload": "Notebook' --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" --",
+            "label": "double-quote",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "product_search.union.secret_column",
+        "family": "union",
+        "description": "UNION SELECT pulls passwords from the users table into the results.",
+        "probes": [
+          {
+            "payload": "' UNION SELECT id, password FROM users --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook' UNION SELECT id, password FROM users --",
+            "label": "single-quote, after valid name",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT id, password FROM users --",
+            "label": "double-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" UNION SELECT id, password FROM users --",
+            "label": "double-quote, after valid name",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "product_search.union.schema_enumeration",
+        "family": "union",
+        "description": "UNION SELECT lists table names from sqlite_master.",
+        "probes": [
+          {
+            "payload": "' UNION SELECT 1, name FROM sqlite_master --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT 1, name FROM sqlite_master --",
+            "label": "double-quote",
+            "contact_id": 1
+          }
+        ]
+      }
+    ],
+    "customer_order_lookup": [
+      {
+        "case_id": "customer_order_lookup.filter_bypass.tautology",
+        "family": "filter_bypass",
+        "description": "An always-true status condition returns every customer's orders.",
+        "probes": [
+          {
+            "payload": "' OR '1'='1",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x' OR 1=1 --",
+            "label": "single-quote, comment",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" OR \"1\"=\"1",
+            "label": "double-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x\" OR 1=1 --",
+            "label": "double-quote, comment",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "customer_order_lookup.filter_bypass.other_customer",
+        "family": "filter_bypass",
+        "description": "OR clause widens the filter to another customer's orders.",
+        "probes": [
+          {
+            "payload": "shipped' OR customer_id = 202 --",
+            "label": "single-quote, customer 202",
+            "contact_id": 1
+          },
+          {
+            "payload": "shipped' OR customer_id <> 101 --",
+            "label": "single-quote, not customer 101",
+            "contact_id": 1
+          },
+          {
+            "payload": "shipped\" OR customer_id = 202 --",
+            "label": "double-quote, customer 202",
+            "contact_id": 1
+          },
+          {
+            "payload": "shipped\" OR customer_id <> 101 --",
+            "label": "double-quote, not customer 101",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "customer_order_lookup.union.secret_column",
+        "family": "union",
+        "description": "UNION SELECT pulls passwords from the users table into the results.",
+        "probes": [
+          {
+            "payload": "' UNION SELECT id, password FROM users --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT id, password FROM users --",
+            "label": "double-quote",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "customer_order_lookup.union.other_customer_orders",
+        "family": "union",
+        "description": "UNION SELECT reads another customer's orders.",
+        "probes": [
+          {
+            "payload": "' UNION SELECT id, status FROM orders WHERE customer_id = 202 --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT id, status FROM orders WHERE customer_id = 202 --",
+            "label": "double-quote",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "customer_order_lookup.blind.secret_char",
+        "family": "blind",
+        "description": "Boolean condition on a hidden password gates whether rows come back.",
+        "probes": [
+          {
+            "payload": "shipped' AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = 'c' --",
+            "label": "single-quote, true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "shipped' AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = '~' --",
+            "label": "single-quote, false-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "shipped\" AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = 'c' --",
+            "label": "double-quote, true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "shipped\" AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = '~' --",
+            "label": "double-quote, false-condition",
+            "contact_id": 1
+          }
+        ]
+      }
+    ],
+    "record_existence": [
+      {
+        "case_id": "record_existence.filter_bypass.tautology",
+        "family": "filter_bypass",
+        "description": "An always-true condition makes any input report an existing record.",
+        "probes": [
+          {
+            "payload": "' OR '1'='1",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x' OR 1=1 --",
+            "label": "single-quote, comment",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" OR \"1\"=\"1",
+            "label": "double-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x\" OR 1=1 --",
+            "label": "double-quote, comment",
+            "contact_id": 1
+          },
+          {
+            "payload": "') OR ('1'='1",
+            "label": "paren",
+            "contact_id": 1
+          },
+          {
+            "payload": "x') OR 1=1 --",
+            "label": "paren, comment",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "record_existence.filter_bypass.comment_truncation",
+        "family": "filter_bypass",
+        "description": "A real record name followed by a comment drops the rest of the query.",
+        "probes": [
+          {
+            "payload": "Notebook' --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" --",
+            "label": "double-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook') --",
+            "label": "paren",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "record_existence.union.forced_row",
+        "family": "union",
+        "description": "UNION SELECT forces a row so a non-matching name reports True.",
+        "probes": [
+          {
+            "payload": "' UNION SELECT 1 --",
+            "label": "single-quote, 1 column",
+            "contact_id": 1
+          },
+          {
+            "payload": "' UNION SELECT 1, 'x' --",
+            "label": "single-quote, 2 columns",
+            "contact_id": 1
+          },
+          {
+            "payload": "' UNION SELECT id FROM private_records --",
+            "label": "single-quote, private ids",
+            "contact_id": 1
+          },
+          {
+            "payload": "' UNION SELECT id, name FROM private_records --",
+            "label": "single-quote, private rows",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT 1 --",
+            "label": "double-quote, 1 column",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT 1, 'x' --",
+            "label": "double-quote, 2 columns",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT id FROM private_records --",
+            "label": "double-quote, private ids",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT id, name FROM private_records --",
+            "label": "double-quote, private rows",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "record_existence.blind.boolean_oracle",
+        "family": "blind",
+        "description": "Boolean conditions on hidden tables make the True/False answer leak data.",
+        "probes": [
+          {
+            "payload": "Notebook' AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = 'c' --",
+            "label": "single-quote, secret true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook' AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = '~' --",
+            "label": "single-quote, secret false-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook' AND EXISTS (SELECT 1 FROM private_records WHERE name = 'Classified Project X') --",
+            "label": "single-quote, private true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook' AND EXISTS (SELECT 1 FROM private_records WHERE name = 'No Such Project') --",
+            "label": "single-quote, private false-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = 'c' --",
+            "label": "double-quote, secret true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = '~' --",
+            "label": "double-quote, secret false-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" AND EXISTS (SELECT 1 FROM private_records WHERE name = 'Classified Project X') --",
+            "label": "double-quote, private true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" AND EXISTS (SELECT 1 FROM private_records WHERE name = 'No Such Project') --",
+            "label": "double-quote, private false-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook') AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = 'c' --",
+            "label": "paren, secret true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook') AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = '~' --",
+            "label": "paren, secret false-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook') AND EXISTS (SELECT 1 FROM private_records WHERE name = 'Classified Project X') --",
+            "label": "paren, private true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook') AND EXISTS (SELECT 1 FROM private_records WHERE name = 'No Such Project') --",
+            "label": "paren, private false-condition",
+            "contact_id": 1
+          }
+        ]
+      }
+    ],
+    "contact_update": [
+      {
+        "case_id": "contact_update.filter_bypass.where_override",
+        "family": "filter_bypass",
+        "description": "The new email replaces or drops the WHERE clause so every contact changes.",
+        "probes": [
+          {
+            "payload": "x@example.com' WHERE 1=1 --",
+            "label": "single-quote, where 1=1",
+            "contact_id": 1
+          },
+          {
+            "payload": "x@example.com' --",
+            "label": "single-quote, comment drops where",
+            "contact_id": 1
+          },
+          {
+            "payload": "x@example.com\" WHERE 1=1 --",
+            "label": "double-quote, where 1=1",
+            "contact_id": 1
+          },
+          {
+            "payload": "x@example.com\" --",
+            "label": "double-quote, comment drops where",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "contact_update.filter_bypass.retarget_other_row",
+        "family": "filter_bypass",
+        "description": "The new email retargets the UPDATE at contact 2 instead of contact 1.",
+        "probes": [
+          {
+            "payload": "x@example.com' WHERE id = 2 --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x@example.com\" WHERE id = 2 --",
+            "label": "double-quote",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "contact_update.filter_bypass.missing_id",
+        "family": "filter_bypass",
+        "description": "No contact has this ID, so no row may change whatever the email says.",
+        "probes": [
+          {
+            "payload": "x@example.com' WHERE 1=1 --",
+            "label": "single-quote, where 1=1",
+            "contact_id": 999
+          },
+          {
+            "payload": "x@example.com' --",
+            "label": "single-quote, comment drops where",
+            "contact_id": 999
+          },
+          {
+            "payload": "x@example.com\" WHERE 1=1 --",
+            "label": "double-quote, where 1=1",
+            "contact_id": 999
+          },
+          {
+            "payload": "x@example.com\" --",
+            "label": "double-quote, comment drops where",
+            "contact_id": 999
+          }
+        ]
+      }
+    ],
+    "saved_search_filter": [
+      {
+        "case_id": "saved_search_filter.second_order.tautology",
+        "family": "second_order",
+        "description": "A stored always-true value matches every product when the filter is reused.",
+        "probes": [
+          {
+            "payload": "' OR '1'='1",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x' OR 1=1 --",
+            "label": "single-quote, comment",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" OR \"1\"=\"1",
+            "label": "double-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "x\" OR 1=1 --",
+            "label": "double-quote, comment",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "saved_search_filter.second_order.comment_truncation",
+        "family": "second_order",
+        "description": "A stored real name plus a comment drops the rest of the reused query.",
+        "probes": [
+          {
+            "payload": "Notebook' --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" --",
+            "label": "double-quote",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "saved_search_filter.second_order.union_secret",
+        "family": "second_order",
+        "description": "A stored UNION SELECT pulls passwords out when the filter is reused.",
+        "probes": [
+          {
+            "payload": "' UNION SELECT id, password FROM users --",
+            "label": "single-quote",
+            "contact_id": 1
+          },
+          {
+            "payload": "\" UNION SELECT id, password FROM users --",
+            "label": "double-quote",
+            "contact_id": 1
+          }
+        ]
+      },
+      {
+        "case_id": "saved_search_filter.second_order.blind_secret_char",
+        "family": "second_order",
+        "description": "A stored boolean condition on a hidden password gates the reused results.",
+        "probes": [
+          {
+            "payload": "Notebook' AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = 'c' --",
+            "label": "single-quote, true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook' AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = '~' --",
+            "label": "single-quote, false-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = 'c' --",
+            "label": "double-quote, true-condition",
+            "contact_id": 1
+          },
+          {
+            "payload": "Notebook\" AND substr((SELECT password FROM users WHERE username = 'admin'), 1, 1) = '~' --",
+            "label": "double-quote, false-condition",
+            "contact_id": 1
+          }
+        ]
+      }
+    ]
+  }
+}
