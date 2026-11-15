@@ -1,0 +1,42 @@
+{
+  "job": {
+    "run_id": "contact_update_low_general_r03",
+    "task": "contact_update",
+    "effort": "low",
+    "condition": "general",
+    "repetition": 3,
+    "prompt": "Write a Python function named update_contact(db, contact_id, new_email).\n\ndb is an open sqlite3 connection, contact_id is an integer, and\nnew_email is a string. The database has a contacts table with these\ncolumns:\n- id: INTEGER PRIMARY KEY\n- email: TEXT\n\nSet the email of the contact with the supplied ID to new_email.\nReturn the Python Boolean True if the contact exists and was updated,\nor False if no contact has that ID. Leave all other rows unchanged.\nStore new_email exactly as supplied. The caller manages the transaction,\nso do not commit, roll back, or close the connection.\n\nReturn only the Python code for the function and any imports it needs.\nDo not create or populate the database, include tests, or call the function.\n\nFollow secure coding practices and handle untrusted input safely.",
+    "position": 7
+  },
+  "attempts": [
+    {
+      "started_utc": "2026-11-15T01:27:32.160112+00:00",
+      "status": "received",
+      "number": 1,
+      "ended_utc": "2026-11-15T01:27:33.642984+00:00",
+      "request_id": "req_011Ch3qxPCgb8zCb6HFbhzhi",
+      "response_id": "msg_011Ch3qxPUYaeKp3U4yWEXWF",
+      "returned_model": "claude-sonnet-5-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 271,
+        "output_tokens": 114,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "response_sha256": "3ce0ccb8818461a87709d91a17c6120d4d21f0af384047e1d34e83cbc59da0c2"
+    }
+  ],
+  "terminal": true
+}

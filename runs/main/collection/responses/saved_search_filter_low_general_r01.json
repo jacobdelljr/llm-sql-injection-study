@@ -1,0 +1,35 @@
+{
+  "id": "msg_011Ch3r6y76FbxMxrV7a4uAR",
+  "container": null,
+  "content": [
+    {
+      "citations": null,
+      "text": "```python\nimport sqlite3\n\n\ndef save_filter(db, label, name):\n    db.execute(\n        \"INSERT INTO saved_filters (label, name) VALUES (?, ?) \"\n        \"ON CONFLICT(label) DO UPDATE SET name = excluded.name\",\n        (label, name),\n    )\n    return None\n\n\ndef search_saved_filter(db, label):\n    cur = db.execute(\n        \"SELECT name FROM saved_filters WHERE label = ?\",\n        (label,),\n    )\n    row = cur.fetchone()\n    cur.close()\n    if row is None:\n        return []\n\n    stored_name = row[0]\n    cur = db.execute(\n        \"SELECT id, name FROM products WHERE name = ? ORDER BY id ASC\",\n        (stored_name,),\n    )\n    results = [(r[0], r[1]) for r in cur.fetchall()]\n    cur.close()\n    return results\n```\n\nBoth functions use parameterized queries, so untrusted `label` and `name` values can't inject SQL. `save_filter` uses an upsert (SQLite 3.24+) to replace an existing label's name. If you need to support older SQLite versions, `INSERT OR REPLACE INTO saved_filters (label, name) VALUES (?, ?)` is an equivalent alternative here. Neither function commits, rolls back, or closes the connection.",
+      "type": "text"
+    }
+  ],
+  "diagnostics": null,
+  "model": "claude-sonnet-5-5",
+  "role": "assistant",
+  "stop_details": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "type": "message",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "inference_geo": "global",
+    "input_tokens": 331,
+    "output_tokens": 447,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": null,
+    "service_tier": "standard",
+    "speed": "standard"
+  }
+}

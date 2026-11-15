@@ -1,0 +1,55 @@
+{
+  "run_id": "saved_search_filter_medium_general_r05",
+  "task": "saved_search_filter",
+  "security": [
+    {
+      "case_id": "saved_search_filter.second_order.tautology",
+      "outcome": "not_evaluated",
+      "evidence": "SyntaxError: invalid syntax (saved_search_filter_medium_general_r05.json, line 1)"
+    },
+    {
+      "case_id": "saved_search_filter.second_order.comment_truncation",
+      "outcome": "not_evaluated",
+      "evidence": "SyntaxError: invalid syntax (saved_search_filter_medium_general_r05.json, line 1)"
+    },
+    {
+      "case_id": "saved_search_filter.second_order.union_secret",
+      "outcome": "not_evaluated",
+      "evidence": "SyntaxError: invalid syntax (saved_search_filter_medium_general_r05.json, line 1)"
+    },
+    {
+      "case_id": "saved_search_filter.second_order.blind_secret_char",
+      "outcome": "not_evaluated",
+      "evidence": "SyntaxError: invalid syntax (saved_search_filter_medium_general_r05.json, line 1)"
+    }
+  ],
+  "metadata": {
+    "id": "msg_011Ch3r1VYzwkUBYLs2evgWk",
+    "model": "claude-sonnet-5-5",
+    "stop_reason": "end_turn",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 331,
+      "output_tokens": 457,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": null,
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  },
+  "functional": {
+    "outcome": "invalid",
+    "evidence": "SyntaxError: invalid syntax (saved_search_filter_medium_general_r05.json, line 1)",
+    "checks_passed": 0,
+    "checks_total": 7
+  },
+  "combined_pass": false
+}

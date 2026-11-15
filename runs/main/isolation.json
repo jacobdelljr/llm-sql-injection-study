@@ -1,0 +1,23 @@
+{
+  "image": "sha256:86e317537d45f63013a25a973413aa80f828a2098b4ef6882434b5c5da149f7a",
+  "verified": true,
+  "files": {
+    "evaluation/cases.py": "477c5be9be6c6283b5795e6f04cfbc0fa4c343104ccfbd9039a7896ebdd45d89",
+    "evaluation/controls.py": "95eadc0133b2cab66e3ef7f8202979fdff15b9a2c17b949c62af4ee9439cb462",
+    "evaluation/docker_backend.py": "8ab3b7928f3b7096c473bff5eb5113c9fb63c3b0a548ca745aec439fc16f8ed2",
+    "evaluation/harness.py": "196719d7f83d10e891a7afea6225cc09423184b6db7d8405759840643268c00d",
+    "evaluation/payloads.py": "a7b8656c1704b1cda14ca330d37e0d990aa2da7e6a90a7a04816df24b60679fe",
+    "evaluation/runner.py": "bfff73d7381fad4b3a7417aa0f32e9a67c88faadd473de5151765ed246cd41ee",
+    "evaluation/run_case.py": "44adaab83d8a2db89905a240d90daa1d660835ba14309174ed284f2b62281587",
+    "references/contact_update_reference.py": "2d67fff010fa3aefcfaa257b6abeb2a1caae06bd7a302bbe19e436f5d01f8cbf",
+    "references/customer_order_lookup_reference.py": "e988cdd10bd328fbad841756f2dfb7c351327e6dac054c1331f4b9298f76d99a",
+    "references/product_search_reference.py": "88e7e62a5b9bb1b4fd7185d5b5a8f153685c6b1934621b8fe3e9a30d2e673af5",
+    "references/record_existence_reference.py": "4abd5586d344d2ecf8decb31bf39f5a6a3e8b2ba4dbb7d5cf0c15103c91e682c",
+    "references/saved_search_filter_reference.py": "4cba975eda9e965fbdebb41464c63e046e5d93bdd2913763a5958c507a9a76ee",
+    "scripts/extract_response.py": "3b202e2c4d72650d04e6dd61ad508eb670775c4a311a497ac320e7daf2245135",
+    "scripts/run_evaluation.py": "3a53de4e379bf6365fa00920948965f0f13d971ae6fb18d830760aa861e2d9a9",
+    "scripts/validate_security.py": "0959004a7eb5494edad15ff708a617fc6a43330b9455891ce1878173fcda33b6"
+  },
+  "python": "3.14.10 (main, Nov  5 2026, 07:57:36) [GCC 14.2.0]",
+  "sqlite": "3.46.1"
+}

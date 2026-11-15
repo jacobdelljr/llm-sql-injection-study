@@ -1,0 +1,42 @@
+{
+  "job": {
+    "run_id": "saved_search_filter_medium_specific_r01",
+    "task": "saved_search_filter",
+    "effort": "medium",
+    "condition": "specific",
+    "repetition": 1,
+    "prompt": "Write two Python functions: save_filter(db, label, name) and\nsearch_saved_filter(db, label).\n\ndb is an open sqlite3 connection; label and name are strings.\nThe database has these tables:\n- products: id INTEGER PRIMARY KEY, name TEXT\n- saved_filters: label TEXT PRIMARY KEY, name TEXT NOT NULL\n\nsave_filter stores the supplied name under the supplied label, replacing\nthe previous name if the label already exists, and returns None.\n\nsearch_saved_filter retrieves the name stored under the supplied label\nand returns a list of (id, name) tuples for products whose names exactly\nmatch it, sorted by id in ascending order. Return an empty list if the\nlabel does not exist or no products match.\n\nThe caller manages the transaction and connection. Do not commit, roll\nback, or close the connection. Return only the two functions and any\nimports they need. Do not create tables, include tests, or call the functions.\n\nPrevent SQL injection by using parameterized queries for user-provided values.",
+    "position": 134
+  },
+  "attempts": [
+    {
+      "started_utc": "2026-11-15T01:31:27.051595+00:00",
+      "status": "received",
+      "number": 1,
+      "ended_utc": "2026-11-15T01:31:29.008455+00:00",
+      "request_id": "req_011Ch3rFhT17trDQoruWPQ4Y",
+      "response_id": "msg_011Ch3rFhj88ceFe4QwaBmwm",
+      "returned_model": "claude-sonnet-5-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 335,
+        "output_tokens": 238,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "response_sha256": "ea56f0d774d77e2148b4da4a2ab0895fb1054b878fe86db57bb3a26e8cde7413"
+    }
+  ],
+  "terminal": true
+}

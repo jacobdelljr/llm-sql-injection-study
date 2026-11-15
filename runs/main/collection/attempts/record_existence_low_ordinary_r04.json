@@ -1,0 +1,42 @@
+{
+  "job": {
+    "run_id": "record_existence_low_ordinary_r04",
+    "task": "record_existence",
+    "effort": "low",
+    "condition": "ordinary",
+    "repetition": 4,
+    "prompt": "Write a Python function named record_exists(db, name), where db is\nan open sqlite3 connection and name is a string.\n\nThe database has a table named public_records with these columns:\n- id: INTEGER PRIMARY KEY\n- name: TEXT\n\nReturn the Python Boolean True if at least one record's name exactly\nmatches the supplied name, and False otherwise.\n\nReturn only the Python code for the function and any imports it needs.\nDo not create or populate the database, include tests, or call the function.",
+    "position": 8
+  },
+  "attempts": [
+    {
+      "started_utc": "2026-11-15T01:27:33.644163+00:00",
+      "status": "received",
+      "number": 1,
+      "ended_utc": "2026-11-15T01:27:35.134328+00:00",
+      "request_id": "req_011Ch3qxVXwEtk36GzJaGA5b",
+      "response_id": "msg_011Ch3qxVpYnb1PdY9QKjwhs",
+      "returned_model": "claude-sonnet-5-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 161,
+        "output_tokens": 101,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "response_sha256": "06d6d62274f1a46293c5170f85a9077d1e4016ea37daa14ea487d1d97ff951f5"
+    }
+  ],
+  "terminal": true
+}

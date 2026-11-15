@@ -1,0 +1,35 @@
+{
+  "id": "msg_011Ch3qy4ZXvQDA7LGePenSH",
+  "container": null,
+  "content": [
+    {
+      "citations": null,
+      "text": "```python\nimport sqlite3\n\n\ndef save_filter(db, label, name):\n    db.execute(\n        \"INSERT INTO saved_filters (label, name) VALUES (?, ?) \"\n        \"ON CONFLICT(label) DO UPDATE SET name = excluded.name\",\n        (label, name),\n    )\n    return None\n\n\ndef search_saved_filter(db, label):\n    cursor = db.execute(\n        \"SELECT p.id, p.name \"\n        \"FROM products AS p \"\n        \"JOIN saved_filters AS f ON p.name = f.name \"\n        \"WHERE f.label = ? \"\n        \"ORDER BY p.id ASC\",\n        (label,),\n    )\n    return [(row[0], row[1]) for row in cursor.fetchall()]\n```\n\nBoth functions use parameterized queries, so untrusted `label` and `name` values can't inject SQL. The upsert replaces the name when the label already exists. The search does an exact, case-sensitive match using `=`, not `LIKE`, so wildcard characters in a stored name are treated literally. It returns an empty list if the label is missing or nothing matches. Neither function commits, rolls back, or closes the connection.\n\nThe upsert syntax (`ON CONFLICT ... DO UPDATE`) requires SQLite 3.24 or newer.",
+      "type": "text"
+    }
+  ],
+  "diagnostics": null,
+  "model": "claude-sonnet-5-5",
+  "role": "assistant",
+  "stop_details": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "type": "message",
+  "usage": {
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 0,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0,
+    "inference_geo": "global",
+    "input_tokens": 331,
+    "output_tokens": 429,
+    "output_tokens_details": {
+      "thinking_tokens": 0
+    },
+    "server_tool_use": null,
+    "service_tier": "standard",
+    "speed": "standard"
+  }
+}

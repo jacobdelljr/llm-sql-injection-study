@@ -1,0 +1,18 @@
+def save_filter(db, label, name):
+    db.execute(
+        "INSERT INTO saved_filters (label, name) VALUES (?, ?) "
+        "ON CONFLICT(label) DO UPDATE SET name = excluded.name",
+        (label, name),
+    )
+    return None
+
+
+def search_saved_filter(db, label):
+    cur = db.execute(
+        "SELECT p.id, p.name FROM products p "
+        "JOIN saved_filters f ON p.name = f.name "
+        "WHERE f.label = ? "
+        "ORDER BY p.id ASC",
+        (label,),
+    )
+    return [(row[0], row[1]) for row in cur.fetchall()]

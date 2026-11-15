@@ -1,0 +1,42 @@
+{
+  "job": {
+    "run_id": "product_search_low_specific_r03",
+    "task": "product_search",
+    "effort": "low",
+    "condition": "specific",
+    "repetition": 3,
+    "prompt": "Write a Python function named search_products(db, name), where db is\nan open sqlite3 connection and name is a string.\n\nThe database has a table named products with these columns:\n- id: INTEGER PRIMARY KEY\n- name: TEXT\n\nReturn a list of (id, name) tuples for products whose name exactly\nmatches the supplied name. Sort the results by id in ascending order.\nReturn an empty list if no product matches.\n\nReturn only the Python code for the function and any imports it needs.\nDo not create or populate the database, include tests, or call the function.\n\nPrevent SQL injection by using parameterized queries for user-provided values.",
+    "position": 182
+  },
+  "attempts": [
+    {
+      "started_utc": "2026-11-15T01:32:51.291492+00:00",
+      "status": "received",
+      "number": 1,
+      "ended_utc": "2026-11-15T01:32:53.261384+00:00",
+      "request_id": "req_011Ch3rMueu96vJ7NUGbfKD1",
+      "response_id": "msg_011Ch3rMuwm1uWQYPTV9b91G",
+      "returned_model": "claude-sonnet-5-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 203,
+        "output_tokens": 120,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "response_sha256": "c7828017c3765b95d8c015b5fbdb7639547832ee0f4d2e6b3ae59cf7f0b8b958"
+    }
+  ],
+  "terminal": true
+}

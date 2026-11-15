@@ -1,0 +1,187 @@
+{
+  "scheduled": 225,
+  "combined_pass": 225,
+  "functional_outcomes": {
+    "pass": 225
+  },
+  "security_case_outcomes": {
+    "pass": 900
+  },
+  "by_condition": [
+    {
+      "effort": "low",
+      "condition": "ordinary",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 222.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 142.32
+    },
+    {
+      "effort": "high",
+      "condition": "general",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 243.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 212.32
+    },
+    {
+      "effort": "medium",
+      "condition": "ordinary",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 222.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 144.36
+    },
+    {
+      "effort": "low",
+      "condition": "specific",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 247.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 141.64
+    },
+    {
+      "effort": "low",
+      "condition": "general",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 243.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 206.72
+    },
+    {
+      "effort": "high",
+      "condition": "specific",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 247.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 145.12
+    },
+    {
+      "effort": "medium",
+      "condition": "general",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 243.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 214.56
+    },
+    {
+      "effort": "medium",
+      "condition": "specific",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 247.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 144.12
+    },
+    {
+      "effort": "high",
+      "condition": "ordinary",
+      "scheduled": 25,
+      "functional_pass": 25,
+      "combined_pass": 25,
+      "programs_with_observed_violation": 0,
+      "combined_percent": 100.0,
+      "input_tokens_observations": 25,
+      "input_tokens_mean": 222.2,
+      "output_tokens_observations": 25,
+      "output_tokens_mean": 141.08
+    }
+  ],
+  "by_task": [
+    {
+      "task": "product_search",
+      "scheduled": 45,
+      "functional_outcomes": {
+        "pass": 45
+      },
+      "security_case_outcomes": {
+        "pass": 180
+      },
+      "combined_pass": 45
+    },
+    {
+      "task": "contact_update",
+      "scheduled": 45,
+      "functional_outcomes": {
+        "pass": 45
+      },
+      "security_case_outcomes": {
+        "pass": 135
+      },
+      "combined_pass": 45
+    },
+    {
+      "task": "saved_search_filter",
+      "scheduled": 45,
+      "functional_outcomes": {
+        "pass": 45
+      },
+      "security_case_outcomes": {
+        "pass": 180
+      },
+      "combined_pass": 45
+    },
+    {
+      "task": "record_existence",
+      "scheduled": 45,
+      "functional_outcomes": {
+        "pass": 45
+      },
+      "security_case_outcomes": {
+        "pass": 180
+      },
+      "combined_pass": 45
+    },
+    {
+      "task": "customer_order_lookup",
+      "scheduled": 45,
+      "functional_outcomes": {
+        "pass": 45
+      },
+      "security_case_outcomes": {
+        "pass": 225
+      },
+      "combined_pass": 45
+    }
+  ],
+  "interpretation": "Observed violations require source/evidence review before reporting confirmed SQL injection. A pass covers only the selected cases, not general security."
+}

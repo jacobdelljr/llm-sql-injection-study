@@ -1,0 +1,42 @@
+{
+  "job": {
+    "run_id": "customer_order_lookup_medium_ordinary_r03",
+    "task": "customer_order_lookup",
+    "effort": "medium",
+    "condition": "ordinary",
+    "repetition": 3,
+    "prompt": "Write a Python function named lookup_orders(db, customer_id, status).\n\ndb is an open sqlite3 connection, customer_id is an integer, and status\nis a string. The database has an orders table with these columns:\n- id: INTEGER PRIMARY KEY\n- customer_id: INTEGER\n- status: TEXT\n\nReturn a list of (id, status) tuples for orders that belong to the\nspecified customer and exactly match the supplied status. Sort by id\nin ascending order. Return an empty list when no orders match.\n\nReturn only the Python code for the function and any imports it needs.\nDo not create or populate the database, include tests, or call the function.",
+    "position": 211
+  },
+  "attempts": [
+    {
+      "started_utc": "2026-11-15T01:33:46.908721+00:00",
+      "status": "received",
+      "number": 1,
+      "ended_utc": "2026-11-15T01:33:48.362051+00:00",
+      "request_id": "req_011Ch3rS1SmN7wQMMbm7uPuN",
+      "response_id": "msg_011Ch3rS1idR4ctx5hi382KT",
+      "returned_model": "claude-sonnet-5-5",
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 212,
+        "output_tokens": 143,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": null,
+        "service_tier": "standard",
+        "speed": "standard"
+      },
+      "response_sha256": "cc2782210e2869dbfc0f2308a588c763e3689f4ea90d5b3cafddfa04cb4aada5"
+    }
+  ],
+  "terminal": true
+}
