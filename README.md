@@ -30,6 +30,14 @@ Generated functions are tested against synthetic SQLite databases. Functional ch
 
 A generation counts as a **combined pass** only if it passes its functional suite and every applicable security case. Invalid or unavailable outputs remain in the original denominator. Automated security observations are retained for manual review, rather than treated as confirmed vulnerabilities without supporting evidence. The analysis compares the nine effort–instruction conditions, individual tasks, and API token usage. Passing these selected tests does not establish that code is free of all SQL injection vulnerabilities.
 
+### Evaluation Versions
+
+The initial evaluation (`runs/main/evaluation/`) identified a limitation in the response extraction process. Python code enclosed in Markdown fences followed by explanatory text was incorrectly classified as invalid.
+
+The extractor was updated to handle these responses, and all 225 original generations were reevaluated without additional API requests. The corrected results are stored in `runs/main/evaluation_v2/` and serve as the basis for the final analysis.
+
+Both versions are retained for reproducibility. The original Claude responses remain unchanged.
+
 ## Repository map
 
 | Path | Purpose |

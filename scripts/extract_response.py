@@ -1,3 +1,4 @@
+
 import argparse
 import json
 import re
@@ -12,13 +13,23 @@ def extract_code(response_path: Path) -> str:
         if block["type"] == "text"
     ).strip()
 
-    fence = re.fullmatch(
-        r"```(?:python)?[ \t]*\r?\n(.*?)\r?\n```",
+    # Extract a single fenced Python block, allowing surrounding explanation.
+    fences = re.findall(
+        r"^[ \t]*```(?:python|py)?[ \t]*\r?\n(.*?)^[ \t]*```[ \t]*$",
         code,
-        flags=re.DOTALL | re.IGNORECASE,
+        flags=re.DOTALL | re.IGNORECASE | re.MULTILINE,
     )
-    if fence:
-        code = fence.group(1)
+
+    if fences:
+        if len(fences) != 1:
+            raise ValueError(
+                "Response contains multiple code blocks; manual review required."
+            )
+        code = fences[0].strip()
+    elif "```" in code:
+        raise ValueError(
+            "Response contains an unrecognized or malformed code fence."
+        )
 
     if not code.strip():
         raise ValueError("Response contains no Python code.")
